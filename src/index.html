@@ -4,8 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Pete's Pet Shop</title>
+    <style>
+        .parallax {
+            background-image: url("http://www.seekgif.com/uploads/pixel-wallpaper-background-1.png");
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <title>PokeShop</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,15 +26,18 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body class='parallax'>
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-8 col-sm-push-2">
-          <h1 class="text-center">PokeShop</h1>
+            <div class='text-center'>
+            <img src="https://fontmeme.com/permalink/181107/cc64c87f4adbad38fa981e30d180710b.png" alt="pokemon-font" class="mx-auto d-block">
+            </div>
           <hr/>
           <br/>
         </div>
       </div>
+      <!-- <div class='parallax'></div> -->
 
       <div id="petsRow" class="row">
         <!-- PETS LOAD HERE -->
@@ -49,7 +61,9 @@
         </div>
       </div>
     </div>
-
+    <a href="http://www.seekgif.com/free-image/pixel-wallpaper-background-9121.html">Pixel Wallpaper Background</a>
+    <br>
+    <a href="https://fontmeme.com/pokemon-font/">Pokemon Font</a>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
