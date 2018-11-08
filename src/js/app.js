@@ -1,28 +1,29 @@
+
 App = {
   web3Provider: null,
   contracts: {},
 
   init: async function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+    // Load pokemon
+    $.getJSON('../pokemon.json', function(data) {
+      var pokemonRow = $('#pokemonRow');
+      var pokemonTemplate = $('#pokemonTemplate');
 
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
-
-        petsRow.append(petTemplate.html());
+      for (let i = 0; i < data.length; i ++) {
+        pokemonTemplate.find('.panel-title').text(data[i].name);
+        pokemonTemplate.find('img').attr('src', data[i].picture);
+        pokemonTemplate.find('.pokemon-type').text(data[i].type);
+        pokemonTemplate.find('.pokemon-hp').text(data[i].hp);
+        pokemonTemplate.find('.pokemon-attack').text(data[i].attack);
+        pokemonTemplate.find('.pokemon-defense').text(data[i].defense);
+        pokemonTemplate.find('.pokemon-speed').text(data[i].speed);
+        pokemonTemplate.find('.pokemon-advantage').text(data[i].advantage);
+        pokemonTemplate.find('.pokemon-weaknesses').text(data[i].weaknesses);
+        pokemonTemplate.find('.btn-draft').attr('data-id', data[i].id);
+        pokemonTemplate.find('.details').attr('data-id', data[i].id);
+        pokemonTemplate.find('.details').hide()
+        pokemonRow.append(pokemonTemplate.html());
       }
-    });
-    $(".banner").css({"height": (($(window).height()))+"px"});
-
-    $(window).on("resize", function(){
-    $(".banner").css({"height": (($(window).height()))+"px"});
     });
     return await App.initWeb3();
   },
@@ -61,7 +62,9 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $(document).on('click', '.btn-draft', App.handleAdopt);
+    $(document).on('click', '.btn-learn', App.handleDetails);
+
   },
 
   markAdopted: function(adopters, account) {
@@ -75,7 +78,7 @@ App = {
     .then(function(adopters){
         for(let i = 0; i < adopters.length; i++) {
             if(adopters[i] !== "0x0000000000000000000000000000000000000000") {
-                $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true)
+                $('.panel-pokemon').eq(i).find('button').text('Success').attr('disabled', true)
             }
         }
     })
@@ -88,7 +91,7 @@ App = {
     event.preventDefault();
 
     let petId = parseInt($(event.target).data('id'));
-    console.log('pet id ', petId)
+
     let adoptionInstance;
 
     web3.eth.getAccounts(function(err, accounts) {
@@ -112,6 +115,12 @@ App = {
         })
     })
 
+  },
+
+  handleDetails: function(event) {
+      event.preventDefault()
+      var pokemonTemplate = $('#pokemonTemplate');
+      pokemonTemplate.find('.details').show()
   }
 
 };
