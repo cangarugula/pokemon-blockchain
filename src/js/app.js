@@ -9,7 +9,7 @@ App = {
       var pokemonRow = $('#pokemonRow');
       var pokemonTemplate = $('#pokemonTemplate');
 
-      for (let i = 0; i < data.length; i ++) {
+      for (i = 0; i < data.length; i ++) {
         pokemonTemplate.find('.panel-title').text(data[i].name);
         pokemonTemplate.find('img').attr('src', data[i].picture);
         pokemonTemplate.find('.pokemon-type').text(data[i].type);
@@ -62,8 +62,7 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-draft', App.handleAdopt);
-    $(document).on('click', '.btn-learn', App.handleDetails);
+    $(document).on('click', '.btn-draft', App.handleAdopt)
 
   },
 
@@ -73,11 +72,13 @@ App = {
     App.contracts.PokemonAdoption.deployed()
     .then(function(instance){
         adoptionInstance = instance
+        console.log('marked adpoted deployed')
         return adoptionInstance.getAdopters.call()
     })
     .then(function(adopters){
-        for(let i = 0; i < adopters.length; i++) {
+        for(i = 0; i < adopters.length; i++) {
             if(adopters[i] !== "0x0000000000000000000000000000000000000000") {
+                console.log('marked adopted finding the button')
                 $('.panel-pokemon').eq(i).find('button').text('Success').attr('disabled', true)
             }
         }
@@ -105,12 +106,15 @@ App = {
         .then(function(instance) {
             adoptionInstance = instance
             // executes the adopt function and passes it some meta data for us to store on adopters array as msg.sender
+            console.log('handleadopt deployed')
             return adoptionInstance.adopt(petId, { from: account })
         })
         .then(function(result) {
+            console.log('handleadopt mark adopted')
             return App.markAdopted()
         })
         .catch(function(err) {
+            console.log('hello')
             console.log(err.message)
         })
     })
