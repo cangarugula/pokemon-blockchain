@@ -30,6 +30,30 @@
           <br/>
         </div>
       </div>
+      <div id='draft-board'>
+            <div>
+                <table class="table">
+                    <thead class='thead-dark'>
+                        <tr>
+                        <th scope="col">Account#</th>
+                        <th scope="col">Pokemon</th>
+                        </tr>
+                    </thead>
+                    <tbody id=draftRow>
+                        <tr>
+                            <th scope="row" class='accountId'>111</th>
+                            <td class='pokemon-name'>Cang</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div >
+            <tr id='draftTemplate'>
+                <th scope="row" class='accountId'></th>
+                <td class='pokemon-name'></td>
+            </tr>
+        </div>
 
       <div id="pokemonRow" class="row">
         <!-- Pokemon load here -->
@@ -43,22 +67,26 @@
             <h3 class="panel-title">Name</h3>
           </div>
           <div class="panel-body">
-            <img alt="140x140" data-src="holder.js/100x100" class="img-rounded img-center" style="width: 100%;" src="" data-holder-rendered="true">
+            <img data-src="holder.js/100x100" class="img-rounded img-center" style="width: 100%;" src="" data-holder-rendered="true">
             <br/><br/>
             <strong>Type: </strong><span class="pokemon-type">Pokemon Type</span><br/>
             <div class='details'>
+                <div class='container'>
 
-                <strong>HP: </strong><span class="pokemon-hp details">45</span><br/>
+                    <strong>HP: </strong><span class="pokemon-hp details">45</span><br/>
 
-                <strong>Attack: </strong><span class="pokemon-attack details">45</span><br/>
+                    <strong>Attack: </strong><span class="pokemon-attack details">45</span><br/>
 
-                <strong>Defense: </strong><span class="pokemon-defense details">45</span><br/>
+                    <strong>Defense: </strong><span class="pokemon-defense details">45</span><br/>
 
-                <strong>Speed: </strong><span class="pokemon-speed details">45</span><br/>
+                    <strong>Speed: </strong><span class="pokemon-speed details">45</span><br/>
 
-                <strong>Advantages: </strong><span class="pokemon-advantage details">Fire-types</span><br/>
+                </div>
+                <div >
+                    <strong>Advantages: </strong><span class="pokemon-advantage details">Fire-types</span><br/>
 
-                <strong>Weaknesses: </strong><span class="pokemon-weaknesses details">Grass-Types</span><br/>
+                    <strong>Weaknesses: </strong><span class="pokemon-weaknesses details">Grass-Types</span><br/>
+                </div>
             </div>
             <button class="btn btn-default btn-draft" type="button" data-id="0">Draft</button>
           </div>

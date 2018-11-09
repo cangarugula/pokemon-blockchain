@@ -21,7 +21,6 @@ App = {
         pokemonTemplate.find('.pokemon-weaknesses').text(data[i].weaknesses);
         pokemonTemplate.find('.btn-draft').attr('data-id', data[i].id);
         pokemonTemplate.find('.details').attr('data-id', data[i].id);
-        pokemonTemplate.find('.details').hide()
         pokemonRow.append(pokemonTemplate.html());
       }
     });
@@ -46,54 +45,61 @@ App = {
   },
 
   initContract: function() {
-    $.getJSON('PokemonAdoption.json', function(data) {
+    $.getJSON('PokemonDraft.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
-        var PokemonAdoptionArtifact = data;
-        App.contracts.PokemonAdoption = TruffleContract(PokemonAdoptionArtifact);
+        var PokemonDraftArtifact = data;
+        App.contracts.PokemonDraft = TruffleContract(PokemonDraftArtifact);
 
         // Set the provider for our contract
-        App.contracts.PokemonAdoption.setProvider(App.web3Provider);
+        App.contracts.PokemonDraft.setProvider(App.web3Provider);
 
-        // Use our contract to retrieve and mark the adopted pokemon
-        return App.markAdopted();
+        // Use our contract to retrieve and mark the drafted pokemon
+        return App.markDrafted();
       });
 
     return App.bindEvents();
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn-draft', App.handleAdopt)
-
+    $(document).on('click', '.btn-draft', App.handleDraft)
   },
 
-  markAdopted: function(adopters, account) {
-    let adoptionInstance;
+  markDrafted: function() {
+    let draftInstance;
 
-    App.contracts.PokemonAdoption.deployed()
+    App.contracts.PokemonDraft.deployed()
     .then(function(instance){
-        adoptionInstance = instance
-        console.log('marked adpoted deployed')
-        return adoptionInstance.getAdopters.call()
+        draftInstance = instance
+        return draftInstance.getTrainers.call()
     })
-    .then(function(adopters){
-        for(i = 0; i < adopters.length; i++) {
-            if(adopters[i] !== "0x0000000000000000000000000000000000000000") {
-                console.log('marked adopted finding the button')
-                $('.panel-pokemon').eq(i).find('button').text('Success').attr('disabled', true)
+    .then(function(trainers){
+        let draftRow = $('#draftRow');
+        let draftTemplate = $('#draftTemplate');
+        for(i = 0; i < trainers.length; i++) {
+            if(trainers[i] !== "0x0000000000000000000000000000000000000000") {
+                // $.getJSON('../pokemon.json', function(data) {
+                // let pokemon = data[$('.panel-pokemon').find('button').attr('data-id')]
+                // console.log(pokemon)
+                $('.panel-pokemon').eq(i).find('button').text('Drafted').attr('disabled', true)
+                // draftTemplate.find('.accountId').text(trainers[i]);
+                // draftTemplate.find('.pokemon-name').text(pokemon.name)
+                // draftRow.append(draftTemplate.html());
+                // })
             }
         }
     })
+
     .catch(function(err) {
         console.log(err.message)
     })
   },
 
-  handleAdopt: function(event) {
+  handleDraft: function(event) {
     event.preventDefault();
 
-    let petId = parseInt($(event.target).data('id'));
+    let pokeId = parseInt($(event.target).data('id'));
 
-    let adoptionInstance;
+    let draftInstance;
 
     web3.eth.getAccounts(function(err, accounts) {
         if(err) {
@@ -102,19 +108,18 @@ App = {
 
         let account = accounts[0]
 
-        App.contracts.PokemonAdoption.deployed()
+        App.contracts.PokemonDraft.deployed()
         .then(function(instance) {
-            adoptionInstance = instance
-            // executes the adopt function and passes it some meta data for us to store on adopters array as msg.sender
-            console.log('handleadopt deployed')
-            return adoptionInstance.adopt(petId, { from: account })
+            draftInstance = instance
+            // executes the draft function and passes it some meta data for us to store on trainers array as msg.sender
+            console.log('handleDraft deployed')
+            return draftInstance.draft(pokeId, { from: account })
         })
         .then(function(result) {
-            console.log('handleadopt mark adopted')
-            return App.markAdopted()
+            console.log('handleDraft mark drafted')
+            return App.markDrafted()
         })
         .catch(function(err) {
-            console.log('hello')
             console.log(err.message)
         })
     })

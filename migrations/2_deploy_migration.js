@@ -1,5 +1,5 @@
-var PokemonAdoption = artifacts.require("./PokemonAdoption.sol");
+var PokemonDraft = artifacts.require("./PokemonDraft.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(PokemonAdoption);
+  deployer.deploy(PokemonDraft);
 };
